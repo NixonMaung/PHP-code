@@ -1,52 +1,28 @@
-<?php 
-ob_start();
-include 'core/init.php';
-include 'includes/overall/Header.php';logged_in_redirect();?>
-
-<div id="container">
-<?php  include 'includes/aside.php';
-
-
-if(empty($_POST)=== false)
-{
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-	
-	if(empty($username) === true  || empty($password) === true )
-	{
-		$errors[] = 'You need to enter a username and password ';
-	}else if (user_exists($username)===false)
-	{
-		$errors[] = 'We can not find that username. Have you registered?';
-	}else if (user_active($username)===false )
-	{
-		echo    'You have not activated your account!';
-		
-		  header('Location:accountActivateInput.php');
-		  exit(); 
-	}else 
-	{	
-	if(strlen($password)>32){
-		$errors[] = 'Password too long';
-	}
-		 $login = login ($username,$password);
-			if ($login ===false )
-			{
-				$errors[] = 'That username / passwrod combination is incorrect';
-			}else {
-		$_SESSION["user_id"] =   $login ;
-      header("Location:index.php");
-		exit();	
-		} 
-	}
-}
-if (empty($errors)===false){
-	
-?>
-	<h2>We tried to log you in, but...</h2>
-<?php
-		echo output_errors ($errors);
-	
-}
-?></div><?php
-include 'includes/overall/Footer.php';ob_end_flush();?>
+ <div class="widget" >
+                <h2>Log in/Register</h2>
+                <div class="inner">
+                   <form action="login.php" method="post">
+				   <ul id="login">
+						<li>
+							Username: <br>
+							<input type="text" name="username">
+						</li>
+						<li>
+						Password: <br>
+							<input type="password" name="password">
+							</li>
+						<li>
+							<input type="submit" value="Log in">
+						</li>
+						<li>
+							<a href="register.php">Register</a>
+						</li>
+						<li>
+						Forgotten your <a href="recover.php?mode=username">username</a> or <a href="recover.php?mode=password">password</a>?
+							
+						</li>
+				   </ul>
+				   </form>
+                </div>
+            </div>
+          
